@@ -1,0 +1,32 @@
+version: '3.1'
+services:
+  api-gtw:
+    image: api-gtw:latest
+    container_name: api-gtw
+    ports:
+      - '8080:8080'
+    networks:
+      - auth
+
+  auth:
+    image: auth-svc:latest
+    container_name: auth-svc
+    depends_on:
+      - postgres
+    networks:
+      - auth
+      - postgres
+
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - postgres
+
+networks:
+  auth:
+  postgres:
