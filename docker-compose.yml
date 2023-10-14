@@ -5,6 +5,8 @@ services:
     container_name: api-gtw
     ports:
       - '8080:8080'
+    depends_on:
+      - auth
     networks:
       - auth
 
@@ -13,9 +15,11 @@ services:
     container_name: auth-svc
     depends_on:
       - postgres
+      - sms
     networks:
       - auth
       - postgres
+      - sms
 
   postgres:
     image: postgres:14-alpine
@@ -26,7 +30,13 @@ services:
       - POSTGRES_PASSWORD=postgres
     networks:
       - postgres
+  sms:
+    image: sms-svc:latest
+    container_name: sms-svc
+    networks:
+      - sms
 
 networks:
   auth:
   postgres:
+  sms:
