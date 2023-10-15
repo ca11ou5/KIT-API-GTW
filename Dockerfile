@@ -11,5 +11,6 @@ FROM alpine AS runner
 
 COPY --from=builder /usr/local/src/bin/main /main
 COPY configs/envs/dev.env configs/envs/dev.env
+COPY web web
 
 CMD ["/main"]

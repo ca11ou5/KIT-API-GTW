@@ -3,17 +3,18 @@ package routes
 import (
 	"API_Gateway/internal/auth/pb"
 	"context"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-type VerifyPhoneRequestBody struct {
+type SignInRequestBody struct {
 	PhoneNumber string `json:"phone_number" binding:"required"`
-	Code        string `json:"code" binding:"required"`
+	Password    string `json:"password" binding:"required"`
 }
 
-func VerifyPhone(ctx *gin.Context, c pb.AuthServiceClient) {
-	b := VerifyPhoneRequestBody{}
+func SignIn(ctx *gin.Context, c pb.AuthServiceClient) {
+	b := SignInRequestBody{}
 
 	err := ctx.ShouldBindJSON(&b)
 	if err != nil {
@@ -21,12 +22,16 @@ func VerifyPhone(ctx *gin.Context, c pb.AuthServiceClient) {
 		return
 	}
 
-	res, err := c.VerifyPhone(context.Background(), &pb.VerifyPhoneRequest{
+	res, err := c.SignIn(context.Background(), &pb.SignInRequest{
 		PhoneNumber: b.PhoneNumber,
-		Code:        b.Code,
+		Password:    b.Password,
 	})
 	if err != nil {
 		ctx.AbortWithError(http.StatusBadGateway, err)
+		return
+	}
+	if res.Error != "" {
+		ctx.AbortWithError(int(res.Status), errors.New(res.Error))
 		return
 	}
 

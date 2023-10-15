@@ -16,10 +16,17 @@ services:
     depends_on:
       - postgres
       - sms
+      - redis
     networks:
       - auth
       - postgres
       - sms
+      - redis
+  redis:
+    image: redis
+    container_name: redis
+    networks:
+      - redis
 
   postgres:
     image: postgres:14-alpine
@@ -40,3 +47,4 @@ networks:
   auth:
   postgres:
   sms:
+  redis:

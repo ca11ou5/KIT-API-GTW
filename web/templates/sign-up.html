@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../css/sign-up.css">
+    <link rel="stylesheet" href="/web/css/sign-up.css">
 </head>
 <body>
-    <div class="signup">
-        <h1>Регистрация</h1>
-        <form class="signup-form" id="signup-form">
-            <input type="number" id="phonenumber" name="phonenumber" placeholder="Номер телефона" required>
-            <input type="password" id="password" name="password" placeholder="Пароль" required>
-            <button type="submit">Зарегистрироваться</button>
-        </form>
+    <div class="container">
+    <form id="signup-form" class="signup-form">
+        <input type="text" name="phone_number" placeholder="Номер телефона">
+        <input type="text" name="password" placeholder="Пароль">
+        <input type="text" name="name" placeholder="Имя">
+        <input type="text" name="surname" placeholder="Фамилия">
+        <input type="text" name="date_of_birth" placeholder="Дата рождения">
+        <button type="submit">Отправить</button>
+    </form>
     </div>
+    <script src="../js/sign-up.js"></script>
 </body>
 </html>

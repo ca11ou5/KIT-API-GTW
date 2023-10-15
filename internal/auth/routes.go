@@ -11,12 +11,17 @@ func InitRoutes(r *gin.Engine, cfg *configs.Config) *ServiceClient {
 	svc := &ServiceClient{AuthClient: InitAuthClient(cfg)}
 
 	auth := r.Group("auth")
-	auth.GET("sign-up", svc.RenderSignUp)
 	auth.POST("sign-up", svc.SignUp)
+	auth.GET("sign-up", svc.RenderSignUp)
 	auth.POST("verify-phone", svc.VerifyPhone)
 	auth.POST("send-code", svc.CheckUser)
+	auth.POST("sign-in", svc.SignIn)
 
 	return svc
+}
+
+func (c *ServiceClient) SignIn(ctx *gin.Context) {
+	routes.SignIn(ctx, c.AuthClient)
 }
 
 func (c *ServiceClient) RenderSignUp(ctx *gin.Context) {

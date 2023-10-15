@@ -36,5 +36,5 @@ func SignUp(ctx *gin.Context, c pb.AuthServiceClient) {
 		return
 	}
 
-	ctx.JSON(int(res.Status), gin.H{"error": res.Error})
+	ctx.JSON(http.StatusOK, gin.H{"error": &res})
 }

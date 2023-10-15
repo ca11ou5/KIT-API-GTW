@@ -12,6 +12,8 @@ func main() {
 
 	// HTTP Server
 	r := gin.Default()
+	r.LoadHTMLGlob("./web/templates/*")
+
 	auth.InitRoutes(r, &cfg)
 	err := r.Run(cfg.Port)
 	if err != nil {
