@@ -35,5 +35,8 @@ func SignIn(ctx *gin.Context, c pb.AuthServiceClient) {
 		return
 	}
 
+	ctx.SetCookie("access_token", res.AccessToken, 1800, "/", "localhost", false, false)
+	ctx.SetCookie("refresh_token", res.RefreshToken, 604800, "/", "localhost", false, true)
+
 	ctx.JSON(int(res.Status), &res)
 }
